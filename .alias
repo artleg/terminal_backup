@@ -1,0 +1,42 @@
+# Установка alias'ов
+
+alias df='df -ahP'
+alias du='du -s * -h'
+alias ls='ls -ashF --color=auto --group-directories-first'
+alias ll='ls -al --color=auto --group-directories-first'
+alias host='host -av'
+
+### вывод только каталогов
+alias lsd='ls -ld *(-/DN)'
+
+alias grep='grep --color=auto'
+# Мои алиасы
+alias uu="yaourt -Suya"
+alias inst="yaourt -S --needed"
+alias srh="yaourt -Ss"
+alias insts="yaourt -Ql"
+alias vpkg="yaourt -Si"
+alias rem='yaourt -Rnsc'
+alias arem='yaourt -u'
+alias rm="rm -i"
+alias anon="sudo killall tor && tor & chromium-browser --incognito --proxy-server="socks5://localhost:9050""
+alias router="sshfs root@192.168.1.1:/jffs /media/router -p 9014 -o allow_other -o hard_remove,follow_symlinks,reconnect"
+#alias torrent="sudo curlftpfs -o allow_other ftp://artleg:590142@192.168.1.1/opt/ect/transmissin/torrents ~/dowloads/router_torrents"
+alias shutdown="sudo /sbin/shutdown -h now"
+alias debi="sudo dpkg -i"
+alias dinst="yaourt -Qs"
+alias radd="sudo add-apt-repository"
+alias srhpid="ps ax | grep"
+alias emacs="emacs -nw"
+alias mountvps="sudo sshfs artleg@178.63.245.135:/ /mnt/vps -p 59014 -o allow_other -o hard_remove"
+alias rsync="rsync -r --progress"
+alias rs="rsync -r --progress"
+alias -s {avi,mpeg,mpg,mov,m2v,wmv}=vlc
+alias -s {ogg,flac,mp3,wav,wma}=deadbeef
+alias -s {html,htm,php}=chromium-browser
+alias '..'='cd ..'
+alias -g ....='../..'
+alias -g ......='../../..'
+alias -g ........='../../../..'
+alias trace="mtr"
+alias free="free -m"

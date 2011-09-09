@@ -1,0 +1,264 @@
+# Подключаем файл с алиасами.
+. ~artleg/Dropbox/backup/terminal/.alias
+# поиск в истории команд
+autoload -U predict-on
+zle -N predict-on
+zle -N predict-off
+bindkey "^X^Z" predict-on # C-x C-z
+bindkey "^Z" predict-off # C-z
+#----------------------------------------
+
+# Path для поиска командой cd: то есть вместо cd $HOME/docs/editors/
+# можно набирать просто cd editors
+#cdpath=(~/media ~/docs)
+#добавляет в PATH катаалоок в домашней директории.
+if [ -d ~/bin ] ; then
+  PATH=~/bin:"${PATH}"
+fi
+
+## Установка нормального поведения клавиш Delete, Home, End и т.д.:
+case $TERM in
+        linux)
+bindkey "^[[2~" yank
+bindkey "^[[3~" delete-char
+bindkey "^[[5~" up-line-or-history
+bindkey "^[[6~" down-line-or-history
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
+bindkey "^[e" expand-cmd-path ## C-e for expanding path of typed command
+bindkey "^[[A" up-line-or-search ## up arrow for back-history-search
+bindkey "^[[B" down-line-or-search ## down arrow for fwd-history-search
+bindkey " " magic-space ## do history expansion on space
+bindkey "\e\e[C" forward-word
+bindkey "\e\e[D" backward-word
+bindkey "\e[5C" forward-word
+bindkey "\eOc" emacs-forward-word
+bindkey "\e[5D" backward-word
+;;
+*xterm*|rxvt|(dt|k|E)term)
+bindkey "^[[2~" yank
+bindkey "^[[3~" delete-char
+bindkey "^[[5~" up-line-or-history
+bindkey "^[[6~" down-line-or-history
+bindkey "^[[7~" beginning-of-line
+bindkey "^[[8~" end-of-line
+bindkey "^[e" expand-cmd-path ## C-e for expanding path of typed command
+bindkey "^[[A" up-line-or-search ## up arrow for back-history-search
+bindkey "^[[B" down-line-or-search ## down arrow for fwd-history-search
+bindkey " " magic-space ## do history expansion on space
+;;
+esac
+
+
+
+# Примечание: если, скажем, в KDE для konsole
+# выбрать тип Linux console, необходимости
+# во второй секции нет.
+
+# Use hard limits, except for a smaller stack and no core dumps
+unlimit
+limit stack 8192
+limit core 0
+limit -s
+
+
+# Ниже даны опции, относящиеся к функциям zsh,
+# которыми собственно и определяется мощь этой оболочки
+# Shell functions
+setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
+freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
+
+# Where to look for autoloaded function definitions
+fpath=($fpath ~/.zfunc)
+
+# Autoload all shell functions from all directories in $fpath (following
+# symlinks) that have the executable bit on (the executable bit is not
+# necessary, but gives you an easy way to stop the autoloading of a
+# particular shell function). $fpath should not be empty for this to work.
+for func in $^fpath/*(N-.x:t); autoload $func
+
+# automatically remove duplicates from these arrays
+typeset -U path cdpath fpath manpath
+
+# Указание путей к man-страницам.
+manpath="/usr/man:/usr/share/man:/usr/local/man:/usr/X11R6/man:/opt/qt/doc"
+export MANPATH
+
+# Установка вида приглашения 
+#(я использую раскоментированый вариант, закоментированны другие, пробуйте, какой вам милее), а так же можите #переделать под себя как цвета, так и символы.
+
+## Обычное приглащение вида ~%=>
+## (каталог от домашнего - пользователь/root - стрелка)
+#Простой
+#PROMPT='%T [%n@%m]%~%:> '
+#Цветной
+
+#PROMPT=$'%{\e[0;37m%}%T %{\e[0;32m%}%n%{\e[0;31m%}@%{\e[0;37m%}%m%{\e[0;31m%}:%{\e[0;39m%}%~%{\e[1;33m%}>%{\e[0m%} '
+
+#PROMPT=$'%{\e[1;33m%}%T %{\e[0;36m%}[%{\e[0;32m%}%n%{\e[1;31m%}&%{\e[0;37m%}%m%{\e[0;36m%}]%{\e[0;36m%}:%{\e[0;33m%}%~%{\e[0;36m%}>%{\e[0m%} '
+
+PROMPT=$'%{\e[0;32m%}%T %{\e[0;36m%}[%{\e[0;36m%}%n%{\e[0;32m%}|%{\e[0;39m%}%m%{\e[0;36m%}]%{\e[0;32m%}:%{\e[0;39m%}%~%{\e[0;36m%}>%{\e[0m%} '
+
+
+#PROMPT=$'%{\e[0;32m%}%T %{\e[0;36m%}[%{\e[0;36m%}%n%{\e[0;33m%}*%{\e[0m%}%m%{\e[0;36m%}]%{\e[0;36m%}:%{\e[0;39m%}%~%{\e[0;36m%}>%{\e[0m%} '
+
+## Приглашения для второй линии мноргострочных команд (я не использую, но можите раскоментировать)
+## вида #_строки>
+#PROMPT2='%~%#=> '
+#PROMPT2='%i%U> '
+
+
+## Приглашение с правой стороны экрана вида (я не использую, но можите раскоментировать)
+## 19:15 vc/5 (время - номер консоли)
+#RPROMPT=' %T %y%b'
+#RPROMPT=' %y'
+
+# Переменные
+
+## файл истории команд
+## если не указан, история не будет сохраняться
+## при выходе из сеанса
+HISTFILE=~/.zhistory
+
+## Число команд, сохраняемых в HISTFILE
+SAVEHIST=5000
+
+## Чucлo koмaнg, coxpaняeмыx в сеансе
+HISTSIZE=5000
+## Примечание:
+## рекомендуются равные значения для
+## SAVEHIST и HISTSIZE
+# Умолчальный редактор
+export EDITOR="emacs -nw" 
+
+DIRSTACKSIZE=20
+
+zstyle ':completion:*' menu yes select	# меню с выбором стрелочками
+# Опции истории команд
+
+
+setopt  APPEND_HISTORY      # Дополнение файла истрии
+#setopt  HIST_IGNORE_ALL_DUPS # Игнopupoвaть вce пoвтopeнuя команд
+setopt  HIST_IGNORE_SPACE   # Игнopupo лишние пpoбeлы
+setopt  HIST_REDUCE_BLANKS  # Удалять из файл истории пустые строки
+#setopt autocd              # Переходить в каталоги без набора cd  
+setopt NUMERIC_GLOB_SORT    # Файлы с цифрами сортировать числовым методом, а не лексическим
+#setopt CORRECT_ALL         # исправлять неверно набранные комманды  
+setopt completealiases      # автодополнение алифсов
+setopt auto_list            # list choice on ambiguous command
+setopt auto_menu            # show menu for completion
+
+
+# вопрос на автокоррекцию 
+#SPROMPT='zsh: Заменить '\''%R'\'' на '\''%r'\'' ? [Yes/No/Abort/Edit] '
+
+# экранируем спецсимволы в url, например &, ?, ~ и так далее 
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
+
+# режим редактирования команды, вызывает для этого то что в $EDITOR 
+autoload -U edit-command-line
+
+# Вызов редактора для редактирования строки ввода (хоткей в стиле emacs) 
+# bindkey -M vicmd v edit-command-line для командного режима vi 
+zle -N  edit-command-line
+bindkey -M emacs "^X^E" edit-command-line
+
+# ----------- Completion Styles ----------
+
+# list of completers to use
+zstyle ':completion:*::::' completer _expand _complete _ignored _approximate
+
+# allow one error for every three characters typed in approximate completer
+zstyle -e ':completion:*:approximate:*' max-errors
+#    'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
+
+# insert all expansions for expand completer
+zstyle ':completion:*:expand:*' tag-order all-expansions
+
+# formatting and messages
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format '%B%d%b'
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format 'No matches for: %d'
+zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
+zstyle ':completion:*' group-name ''
+
+# match uppercase from lowercase
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# offer indexes before parameters in subscripts
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# command for process lists, the local web server details and host completion
+#zstyle ':completion:*:processes' command 'ps -o pid,s,nice,stime,args'
+#zstyle ':completion:*:urls' local 'www' '/var/www/htdocs' 'public_html'
+zstyle '*' hosts $hosts
+
+
+#unalias run-help
+autoload run-help
+#_______________________________________
+# Мои дополнения 
+# Распаковка любого архива (http://muhas.ru/?p=55)
+unpack() {
+if [ -f $1 ] ; then
+case $1 in
+	*.tar.bz2)   tar xjf $1        ;;
+	*.tar.gz)    tar xzf $1     ;;
+	*.bz2)       bunzip2 $1       ;;
+	*.rar)       unrar x $1     ;;
+	*.gz)        gunzip $1     ;;
+	*.tar)       tar xf $1        ;;
+	*.tbz2)      tar xjf $1      ;;
+	*.tgz)       tar xzf $1       ;;
+	*.zip)       unzip $1     ;;
+	*.Z)         uncompress $1  ;;
+	*.7z)        7z x $1    ;;
+	*)           echo "Cannot unpack '$1'..." ;;
+esac
+else
+echo "'$1' is not a valid file"
+fi
+}
+
+# ... и упаковка (http://muhas.ru/?p=55)
+pack() {
+if [ $1 ] ; then
+case $1 in
+	tbz)   	tar cjvf $2.tar.bz2 $2      ;;
+	tgz)   	tar czvf $2.tar.gz  $2   	;;
+	tar)  	tar cpvf $2.tar  $2       ;;
+	bz2)	bzip $2 ;;
+	gz)		gzip -c -9 -n $2 > $2.gz ;;
+	zip)   	zip -r $2.zip $2   ;;
+	7z)    	7z a $2.7z $2    ;;
+	*)     	echo "'$1' Cannot be packed via pack()" ;;
+esac
+else
+echo "'$1' is not a valid file"
+fi
+}
+#________
+
+
+#Переименование файлов: «name имяфайла» и появится диалог для переименования.
+name() {
+    name=$1
+    vared -c -p 'rename to: ' name
+    command mv $1 $name
+}
+
+bindkey -e
+lsmac() { ifconfig -a | sed '/eth\|wl/date +%T_%d_%m_%Y;s/ Link.*HWaddr//' ; }
+
+
+#Цвета man
+export LESS_TERMCAP_mb=$'\033[01;36m'
+export LESS_TERMCAP_md=$'\033[01;32m'
+export LESS_TERMCAP_me=$'\033[0m'
+export LESS_TERMCAP_mu=$'\033[01;37m'
+export LESS_TERMCAP_se=$'\033[0m'
+export LESS_TERMCAP_so=$'\033[01;44;33m'
+export LESS_TERMCAP_ue=$'\033[0m'
+export LESS_TERMCAP_us=$'\033[01;36m'
