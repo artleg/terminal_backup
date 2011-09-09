@@ -8,7 +8,7 @@ HISTFILE=~/.zhistory
 bindkey -e
 
 # редактор по дефолту 
-export EDITOR=emacs
+export EDITOR="emacs -nw"
 
 # режим редактирования команды, вызывает для этого то что в $EDITOR 
 autoload -U edit-command-line
