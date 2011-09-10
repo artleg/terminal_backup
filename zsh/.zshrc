@@ -1,0 +1,1 @@
+/home/artleg/.zshrc
