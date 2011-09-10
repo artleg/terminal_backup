@@ -40,3 +40,5 @@ alias -g ......='../../..'
 alias -g ........='../../../..'
 alias trace="mtr"
 alias free="free -m"
+alias backupd="cd ~artleg/Dropbox/backup"
+alias Dropbox="~artleg/Dropbox"
