@@ -1,0 +1,23 @@
+#############################################################
+################### OFFICIAL DEBIAN REPOS ###################
+#############################################################
+
+###### Debian Main Repos
+deb http://ftp.ru.debian.org/debian/ squeeze main contrib non-free 
+deb-src http://ftp.ru.debian.org/debian/ squeeze main contrib non-free 
+
+###### Debian Update Repos
+deb http://security.debian.org/ squeeze/updates main contrib non-free 
+deb http://ftp.ru.debian.org/debian/ squeeze-proposed-updates main contrib non-free 
+deb-src http://security.debian.org/ squeeze/updates main contrib non-free 
+deb-src http://ftp.ru.debian.org/debian/ squeeze-proposed-updates main contrib non-free 
+
+##############################################################
+##################### UNOFFICIAL  REPOS ######################
+##############################################################
+
+###### 3rd Party Binary Repos
+
+#### Dotdeb - http://www.dotdeb.org
+## Run this command: wget -q -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add -
+deb http://packages.dotdeb.org oldstable all
