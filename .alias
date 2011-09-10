@@ -12,7 +12,7 @@ alias lsd='ls -ld *(-/DN)'
 alias grep='grep --color=auto'
 # Мои алиасы
 alias uu="yaourt -Suya"
-alias inst="yaourt -S --needed"
+alias inst="yaourt -S"
 alias srh="yaourt -Ss"
 alias insts="yaourt -Ql"
 alias vpkg="yaourt -Si"
