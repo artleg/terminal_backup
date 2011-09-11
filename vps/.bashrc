@@ -54,7 +54,3 @@ alias inst="sudo apt-get install"
 alias srh="apt-cache search"
 alias rem="sudo apt-get purge"
 alias arem="sudo apt-get autoremove"
-alias emacs="emacs -nw"
-alias lghttpdstop="sudo /etc/init.d/lighttpd stop"
-alias lghttpdstart="sudo /etc/init.d/lighttpd start"
-
