@@ -20,4 +20,5 @@ deb-src http://ftp.ru.debian.org/debian/ squeeze-proposed-updates main contrib n
 
 #### Dotdeb - http://www.dotdeb.org
 ## Run this command: wget -q -O - http://www.dotdeb.org/dotdeb.gpg | apt-key add -
-deb http://packages.dotdeb.org oldstable all
+#deb http://packages.dotdeb.org oldstable all
+deb http://packages.dotdeb.org squeeze all
