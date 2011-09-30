@@ -20,7 +20,8 @@ alias rem='yaourt -Rnsc'
 alias arem='yaourt -u'
 alias rm="rm -i"
 alias anon="sudo killall tor && tor & chromium-browser --incognito --proxy-server="socks5://localhost:9050""
-alias router="sshfs root@192.168.1.1:/jffs /media/router -p 9014 -o allow_other -o hard_remove,follow_symlinks,reconnect"
+#alias router="sshfs root@192.168.1.1:/jffs /media/router -p 9014 -o allow_other -o hard_remove,follow_symlinks,reconnect"
+alias router="ssh -p 9014 root@192.168.1.1"
 #alias torrent="sudo curlftpfs -o allow_other ftp://artleg:590142@192.168.1.1/opt/ect/transmissin/torrents ~/dowloads/router_torrents"
 alias shutdown="sudo /sbin/shutdown -h now"
 alias debi="sudo dpkg -i"
