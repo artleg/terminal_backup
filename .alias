@@ -48,3 +48,6 @@ alias backupd="cd ~artleg/Dropbox/backup"
 alias term_commit="cd ~artleg/Dropbox/backup/terminal && git commit -a && cd -"
 alias term_push="cd ~artleg/Dropbox/backup/terminal && git push origin master && cd -"
 alias adb="/opt/android-sdk/platform-tools/adb"
+alias bin_commit="cd ~artleg/bin && git commit -a && cd -"
+alias bin_push="cd ~artleg/bin && git push origin master && cd -"alias Time=sudo nptdate pool.ntp.org
+alias Time="sudo ntpdate pool.ntp.org"
